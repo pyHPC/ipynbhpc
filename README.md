@@ -84,7 +84,7 @@ variable, the default should be enough:
 
 This has been tested only on SDSC Gordon and NERSC Carver, if you find any problem or have a feature request, please open an issue on Github:
 
-https://github.com/zonca/ipynbhpc/issues
+https://github.com/pyHPC/ipynbhpc/issues
 
 ## Authors
 
