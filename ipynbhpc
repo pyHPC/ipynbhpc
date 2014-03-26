@@ -31,7 +31,7 @@ def readwhile(stream,func):
             raise exceptions.Exception("Disconnected unexpectedly.") 
  
 print("Requesting an interactive node")
-pqsub=Popen(['ssh','-t','-t','-4','localhost'],stdin=PIPE,stdout=PIPE,stderr=PIPE)
+pqsub=Popen(['ssh','-o', 'GlobalKnownHostsFile=/dev/null','-t','-t','-4','localhost'],stdin=PIPE,stdout=PIPE,stderr=PIPE)
 pqsub.stdin.write((QSUB_TEMPLATE % MINUTES)+"\n")
 pqsub.stdin.write('echo HOSTNAME=`hostname`\n')
  
@@ -53,7 +53,7 @@ pqsub.stdin.write((NOTEBOOK_TEMPLATE % PORT)+"\n")
 readwhile(pqsub.stdout, lambda line: line.find('NotebookApp')>0)
  
 print("Setting up SSH tunnel from computing to login node")
-tunnel = ['ssh', '-t', '-Y', hostname, '-L', '%s:localhost:%s'% (PORT,PORT)]
+tunnel = ['ssh','-o', 'GlobalKnownHostsFile=/dev/null', '-t', '-Y', hostname, '-L', '%s:localhost:%s'% (PORT,PORT)]
 ptunnel = Popen(tunnel,stdout=PIPE,stdin=PIPE)
 ptunnel.stdin.write('echo TUNNEL\n')
 readwhile(ptunnel.stdout,lambda line: line.startswith('TUNNEL'))
